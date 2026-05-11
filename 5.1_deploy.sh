@@ -73,10 +73,10 @@ echo "[BƯỚC 3] Áp dụng 5.1.1 - Giới hạn IP truy cập..."
 if sudo grep -q "allow 127.0.0.1/32" "$SITE_CONF"; then
     echo -e "${YELLOW}[BỎ QUA] Rule 'allow 127.0.0.1/32' đã tồn tại.${NC}"
 else
-    if sudo grep -q "listen \[::\]:80" "$SITE_CONF"; then
-        sudo sed -i '/listen \[::\]:80/a \\n\t# CIS 5.1.1 - Chi cho phep localhost\n\tallow 127.0.0.1\/32;\n\tdeny all;' "$SITE_CONF"
+    if sudo grep -q "^[[:space:]]*listen \[::\]:80" "$SITE_CONF"; then
+        sudo sed -i '/^[[:space:]]*listen \[::\]:80/a \\n\t# CIS 5.1.1 - Chi cho phep localhost\n\tallow 127.0.0.1\/32;\n\tdeny all;' "$SITE_CONF"
     else
-        sudo sed -i '/listen 80/a \\n\t# CIS 5.1.1 - Chi cho phep localhost\n\tallow 127.0.0.1\/32;\n\tdeny all;' "$SITE_CONF"
+        sudo sed -i '/^[[:space:]]*listen 80/a \\n\t# CIS 5.1.1 - Chi cho phep localhost\n\tallow 127.0.0.1\/32;\n\tdeny all;' "$SITE_CONF"
     fi
  
     if sudo grep -q "allow 127.0.0.1/32" "$SITE_CONF"; then
@@ -101,7 +101,7 @@ echo "[BƯỚC 4] Áp dụng 5.1.2 - Giới hạn HTTP Method..."
 if sudo grep -q "limit_except GET HEAD POST" "$SITE_CONF"; then
     echo -e "${YELLOW}[BỎ QUA] Rule 'limit_except' đã tồn tại.${NC}"
 else
-    sudo sed -i '/location \/ {/a \\t\t# CIS 5.1.2 - Chi cho phep GET HEAD POST\n\t\tlimit_except GET HEAD POST {\n\t\t\tdeny all;\n\t\t}' "$SITE_CONF"
+    sudo sed -i '/^[[:space:]]*location \/ {[[:space:]]*$/a \\t\t# CIS 5.1.2 - Chi cho phep GET HEAD POST\n\t\tlimit_except GET HEAD POST {\n\t\t\tdeny all;\n\t\t}' "$SITE_CONF"
  
     if sudo grep -q "limit_except GET HEAD POST" "$SITE_CONF"; then
         echo -e "${GREEN}[OK] Đã thêm rule giới hạn HTTP method.${NC}"
