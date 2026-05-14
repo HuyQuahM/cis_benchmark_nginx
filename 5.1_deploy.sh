@@ -154,7 +154,7 @@ fi
 echo "======================================"
 
 if [ "$FINAL_OK" -eq 1 ]; then
-    echo -e "${GREEN}[DONE] Triển khai hoàn tất. Hệ thống đạt chuẩn CIS 5.1.${NC}"
+    echo -e "${GREEN}[DONE] Triển khai hoàn tất. Hệ thống đạt chuẩn CIS 5.1${NC}"
 else
     echo -e "${YELLOW}[WARN] Một số mục vẫn chưa đạt. Vui lòng kiểm tra thủ công.${NC}"
 fi
